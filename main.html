@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOOD-TIME</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@600&family=Josefin+Sans:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #020617;
+            --gold: #FFD700;
+            --panel: rgba(15, 23, 42, 0.95);
+            --border: rgba(255, 215, 0, 0.25);
+            --text: #f8fafc;
+            --input-bg: #1e293b;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: var(--bg);
+            font-family: 'Josefin Sans', sans-serif;
+            color: var(--text);
+        }
+
+        #welcome-screen {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle, #1e293b 0%, #020617 100%);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: 0.8s ease-in-out;
+        }
+
+        #welcome-screen h1 {
+            font-family: 'DynaPuff';
+            font-size: clamp(40px, 10vw, 85px);
+            color: var(--gold);
+            margin: 0;
+        }
+
+        #welcome-screen p {
+            font-size: clamp(18px, 4vw, 24px);
+            opacity: 0.9;
+            margin-top: 15px;
+        }
+
+        .start-btn {
+            margin-top: 40px;
+            padding: 18px 50px;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            font-family: 'DynaPuff';
+            font-size: 22px;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: 0.3s;
+        }
+
+        #profile-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1500;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .profile-card {
+            background: var(--panel);
+            border: 2px solid var(--gold);
+            padding: 30px;
+            border-radius: 25px;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .close-profile {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            cursor: pointer;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        header {
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'DynaPuff';
+            font-size: clamp(24px, 5vw, 32px);
+            color: var(--gold);
+        }
+
+        .profile-bubble {
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+            background: rgba(255, 215, 0, 0.15);
+            font-size: 20px;
+        }
+
+        main {
+            display: flex;
+            height: calc(100vh - 120px);
+            padding: 20px 50px;
+            gap: 30px;
+            box-sizing: border-box;
+        }
+
+        .left-side {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow-y: auto;
+        }
+
+        .right-side {
+            flex: 0.8;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 10px 22px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Josefin Sans';
+        }
+
+        .tab-btn.active {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 8px;
+        }
+
+        textarea,
+        input,
+        select {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid #334155;
+            border-radius: 12px;
+            color: #fff;
+            padding: 10px;
+            resize: none;
+            box-sizing: border-box;
+            font-family: 'Josefin Sans';
+            font-size: 15px;
+            margin-top: 5px;
+        }
+
+        .main-btn {
+            width: 100%;
+            background: var(--gold);
+            color: #000;
+            border: none;
+            padding: 18px;
+            border-radius: 15px;
+            font-family: 'DynaPuff';
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .history-trigger {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        #history-content {
+            display: none;
+            margin-top: 10px;
+            max-height: 250px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 15px;
+            font-size: 13px;
+            border: 1px solid var(--border);
+        }
+
+        .hist-day {
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .hist-day b {
+            color: var(--gold);
+        }
+
+        #result-content {
+            flex: 1;
+            overflow-y: auto;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .disclaimer {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 15px;
+            border-top: 1px solid var(--border);
+            padding-top: 10px;
+        }
+
+        @media (max-width: 950px) {
+            main {
+                flex-direction: column;
+                height: auto;
+                padding: 15px;
+            }
+
+            .left-side,
+            .right-side {
+                flex: none;
+                width: 100%;
+            }
+
+            .right-side {
+                order: 2;
+                min-height: 350px;
+                margin-top: 10px;
+            }
+
+            .tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="welcome-screen">
+        <h1>FOOD TIME</h1>
+        <p>Kalori alma, Beslen.</p>
+        <button class="start-btn"
+            onclick="document.getElementById('welcome-screen').style.transform='translateY(-100%)'">SİSTEMİ
+            BAŞLAT</button>
+    </div>
+
+    <div id="profile-modal">
+        <div class="profile-card">
+            <span class="close-profile" onclick="toggleProfile()">✕</span>
+            <h3 style="font-family:'DynaPuff'; color:var(--gold); margin:0 0 15px 0">PROFİL AYARLARI</h3>
+            <label>Ad Soyad</label><input type="text" id="p-name">
+            <div style="display:flex; gap:10px">
+                <input type="number" id="p-weight" placeholder="Kilo">
+                <input type="number" id="p-height" placeholder="Boy">
+            </div>
+            <div style="display:flex; gap:10px">
+                <select id="p-gender">
+                    <option value="Erkek">Erkek</option>
+                    <option value="Kadın">Kadın</option>
+                </select>
+                <input type="text" id="p-job" placeholder="Meslek">
+            </div>
+            <label>Hedef</label>
+            <select id="p-goal">
+                <option value="Kilo Ver">Kilo Vermek</option>
+                <option value="Kas Yap">Kas Yapmak</option>
+                <option value="Denge">Dengeli Yaşam</option>
+            </select>
+            <button class="main-btn" onclick="updateProfile()">GÜNCELLE</button>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo">FOOD TIME</div>
+        <div class="profile-bubble" onclick="toggleProfile()">👤</div>
+    </header>
+
+    <main>
+        <div class="left-side">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab(event, 'gunluk')">GÜNLÜK ANALİZ</button>
+                <button class="tab-btn" onclick="switchTab(event, 'besin')">BESİN SORGU</button>
+                <button class="tab-btn" onclick="switchTab(event, 'foto')">FOTO ANALİZ</button>
+            </div>
+
+            <div id="gunluk" class="section active">
+                <div class="card"><label>SABAH</label><textarea id="s1" rows="2"></textarea><input type="text" id="h1"
+                        placeholder="Hissin..." list="hisler"></div>
+                <div class="card"><label>ÖĞLE</label><textarea id="s2" rows="2"></textarea><input type="text" id="h2"
+                        placeholder="Hissin..." list="hisler"></div>
+                <div class="card"><label>AKŞAM</label><textarea id="s3" rows="2"></textarea><input type="text" id="h3"
+                        placeholder="Hissin..." list="hisler"></div>
+                <button class="main-btn" onclick="processAI('gunluk')">ANALİZ ET VE RAPORLA</button>
+                <div class="history-trigger" onclick="toggleHistory()">📅 10 Günlük Öğün Geçmişi</div>
+                <div id="history-content"></div>
+            </div>
+
+            <div id="besin" class="section">
+                <div class="card"><label>Yemek veya İçerik</label><textarea id="besin-input" rows="6"></textarea></div>
+                <button class="main-btn" onclick="processAI('besin')">SORGULA</button>
+            </div>
+
+            <div id="foto" class="section">
+                <div class="card"
+                    style="height: 180px; border: 2px dashed var(--gold); display: flex; align-items: center; justify-content: center; cursor:pointer;"
+                    onclick="document.getElementById('file').click()">
+                    <span id="f-stat">📸 FOTOĞRAF YÜKLE</span>
+                    <input type="file" id="file" hidden onchange="prepFile(this)">
+                </div>
+                <button class="main-btn" onclick="processAI('foto')">TARA</button>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <div id="res-title"
+                style="font-family:'DynaPuff'; color:var(--gold); margin-bottom:15px; font-size:22px; border-bottom:1px solid var(--border); padding-bottom:5px;">
+                DEĞERLENDİRME</div>
+            <div id="result-content">Veri bekleniyor...</div>
+            <div class="disclaimer">⚠️ Uyarı: Analizler yapay zeka tarafından sağlanır; kesinlik içermez ve tıbbi
+                tavsiye yerine geçmez.</div>
+        </div>
+    </main>
+
+    <datalist id="hisler">
+        <option value="Enerjik">
+        <option value="Şişkin">
+        <option value="Yorgun">
+        <option value="Mutlu">
+    </datalist>
+
+    <script>
+        const API_KEY = "AIzaSyBEBxOdpfy4bmdBf3CPkFGhwjj1jzLxj08";
+        let b64 = "";
+        let tabResults = { gunluk: "", besin: "", foto: "" };
+
+        const mockLogs = [
+            { d: "1. Gün", s: "Yulaf ezmesi", o: "Izgara tavuk salata", a: "Mercimek çorbası", ai: "Düşük kalori, yüksek lif. Enerji dengeli." },
+            { d: "2. Gün", s: "Simit, peynir", o: "Hamburger menü", a: "Pizza", ai: "Basit şeker ve trans yağ yüksek. Şişkinlik uyarısı." },
+            { d: "3. Gün", s: "Omlet, lor", o: "Zeytinyağlı taze fasulye", a: "Izgara balık", ai: "Mükemmel protein ve sağlıklı yağ dengesi." },
+            { d: "4. Gün", s: "Pancake", o: "Döner dürüm", a: "Makarna", ai: "Karbonhidrat yüklemesi fazla, öğleden sonra yorgunluk." },
+            { d: "5. Gün", s: "Haşlanmış yumurta", o: "Kinoa kasesi", a: "Sebze sote", ai: "Hafif ve besleyici. Metabolizma hızı ideal." },
+            { d: "6. Gün", s: "Müsli", o: "Kebap", a: "Çorba, salata", ai: "Hayvansal yağ yüksek. Kolesterol dengelemesi önerilir." },
+            { d: "7. Gün", s: "Menemen", o: "Ton balıklı salata", a: "Tavuk suyu çorba", ai: "Omega-3 ve vitamin deposu bir gün." },
+            { d: "8. Gün", s: "Poğaça", o: "Lahmacun", a: "Mantı", ai: "Gluten ağırlıklı beslenme. Su tüketimi artırılmalı." },
+            { d: "9. Gün", s: "Avokado tost", o: "Izgara köfte", a: "Bulgur pilavı", ai: "Kompleks karbonhidratlar sayesinde enerji stabil." },
+            { d: "10. Gün", s: "Meyve tabağı", o: "Nohut yemeği", a: "Yoğurtlu brokoli", ai: "Bitkisel protein odaklı, sindirim sistemi rahat." }
+        ];
+
+        function toggleProfile() {
+            const m = document.getElementById('profile-modal');
+            m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function updateProfile() {
+            const u = { name: document.getElementById('p-name').value, weight: document.getElementById('p-weight').value, height: document.getElementById('p-height').value, job: document.getElementById('p-job').value, gender: document.getElementById('p-gender').value, goal: document.getElementById('p-goal').value };
+            localStorage.setItem('user', JSON.stringify(u));
+            toggleProfile();
+        }
+
+        function switchTab(e, name) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            e.target.classList.add('active');
+            document.getElementById(name).classList.add('active');
+            document.getElementById('res-title').innerText = e.target.innerText;
+            document.getElementById('result-content').innerHTML = tabResults[name] || "Analiz bekleniyor...";
+        }
+
+        function toggleHistory() {
+            const content = document.getElementById('history-content');
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            content.innerHTML = mockLogs.map(l => `
+                <div class="hist-day">
+                    <b>${l.d}:</b><br>
+                    Sabah: ${l.s} | Öğle: ${l.o} | Akşam: ${l.a}<br>
+                    <i>YZ Özet: ${l.ai}</i>
+                </div>`).reverse().join('');
+        }
+
+        function prepFile(i) {
+            const r = new FileReader();
+            r.onload = (e) => { b64 = e.target.result.split(',')[1]; document.getElementById('f-stat').innerText = "✅ HAZIR"; };
+            r.readAsDataURL(i.files[0]);
+        }
+
+        async function processAI(type) {
+            const resBox = document.getElementById('result-content');
+            resBox.innerHTML = "Analiz ediliyor...";
+            const user = JSON.parse(localStorage.getItem('user') || '{"name":"Sporcu","goal":"Denge"}');
+            let bodyParts = [];
+
+            let basePrompt = `Yıldız (*) veya hashtag (#) kullanma. Profesyonel paragraflar kur. `;
+
+            if (type === 'gunluk') {
+                basePrompt += `Kullanıcı 11. günün verilerini giriyor. Önce bugünü analiz et, sonra geçmiş 10 günlük verilere (${JSON.stringify(mockLogs)}) dayanarak yarın için tam menü ve besin stratejisi öner.`;
+                bodyParts.push({ text: basePrompt + ` Sabah: ${document.getElementById('s1').value}, Öğle: ${document.getElementById('s2').value}, Akşam: ${document.getElementById('s3').value}` });
+            } else if (type === 'besin') {
+                // TALİMATLAR SABİTLENDİ
+                basePrompt += `Kesinlikle şunları yap: 1) Besine 10 üzerinden SAĞLIK PUANI ver. 2) İçindeki YARARLI MADDELERİ açıkla. 3) İçindeki ZARARLI MADDELERİ açıkla. Girdi: ${document.getElementById('besin-input').value}`;
+                bodyParts.push({ text: basePrompt });
+            } else if (type === 'foto') {
+                if (!b64) { resBox.innerText = "Fotoğraf yükleyin."; return; }
+                // TALİMATLAR SABİTLENDİ
+                basePrompt += `Kesinlikle görseldeki besine: 1) 10 üzerinden SAĞLIK PUANI ver. 2) İçindeki YARARLI MADDELERİ anlat. 3) İçindeki ZARARLI MADDELERİ anlat.`;
+                bodyParts.push({ text: basePrompt });
+                bodyParts.push({ inline_data: { mime_type: "image/jpeg", data: b64 } });
+            }
+
+            try {
+                const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`, {
+                    method: "POST", headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ contents: [{ parts: bodyParts }] })
+                });
+                const d = await r.json();
+                let clean = d.candidates[0].content.parts[0].text.replace(/[*#]/g, '');
+                tabResults[type] = clean.replace(/\n/g, "<br>");
+                resBox.innerHTML = tabResults[type];
+            } catch (e) { resBox.innerText = "Hata oluştu."; }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, var(--fb-navy) 0%, rgba(0, 28, 84, 0.95) 100%);
+    border-bottom: 3px solid var(--fb-yellow);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    font-size: 28px;
+}
+
+.logo-text {
+    font-family: 'DynaPuff', cursive;
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--fb-yellow) 0%, var(--fb-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    white-space: nowrap;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-bubble {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--fb-yellow) 0%, var(--fb-gold) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    box-shadow: 0 4px 15px rgba(255, 237, 0, 0.3);
+}
+
+.profile-bubble:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 25px rgba(255, 237, 0, 0.5);
+}
+
+.logout-btn {
+    padding: 10px 20px;
+    background: rgba(100, 116, 139, 0.1);
+    border: 2px solid #64748b;
+    border-radius: 10px;
+    color: #64748b;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    white-space: nowrap;
+}
+
+.logout-btn:hover {
+    background: rgba(100, 116, 139, 0.2);
+    border-color: #475569;
+    transform: translateY(-2px);
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1000;
+}
+
+.hamburger {
+    width: 25px;
+    height: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hamburger span {
+    width: 100%;
+    height: 3px;
+    background: var(--fb-yellow);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+@media (max-width: 767px) {
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .app-header {
+        padding: 12px 20px;
+    }
+
+    .logo-text {
+        font-size: 18px;
+    }
+
+    .logout-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    .profile-bubble {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+}

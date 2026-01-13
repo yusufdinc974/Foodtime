@@ -1,0 +1,41 @@
+:root {
+  /* Fenerbahçe Official Colors */
+  --fb-navy: #001C54;
+  --fb-blue: #0A2F6B;
+  --fb-yellow: #FFED00;
+  --fb-gold: #FFD700;
+
+  /* Main Theme Colors */
+  --primary: var(--fb-navy);
+  --secondary: var(--fb-yellow);
+  --accent: var(--fb-gold);
+
+  /* Background Colors */
+  --bg: linear-gradient(135deg, #000814 0%, #001C54 50%, #0A2F6B 100%);
+  --bg-solid: #000814;
+  --panel: rgba(0, 28, 84, 0.4);
+  --panel-hover: rgba(0, 28, 84, 0.6);
+  --card-bg: rgba(10, 47, 107, 0.3);
+
+  /* UI Colors */
+  --border: rgba(255, 237, 0, 0.3);
+  --border-active: var(--fb-yellow);
+  --input-bg: rgba(0, 0, 0, 0.3);
+  --text: #E8E8E8;
+  --text-dim: #94A3B8;
+
+  /* Status Colors */
+  --success: #22C55E;
+  --error: #EF4444;
+  --warning: #F59E0B;
+
+  /* Animation Timings */
+  --transition-fast: 0.2s;
+  --transition-normal: 0.3s;
+  --transition-slow: 0.5s;
+
+  /* Effects */
+  --glow-yellow: 0 0 20px rgba(255, 237, 0, 0.4);
+  --glow-blue: 0 0 30px rgba(10, 47, 107, 0.6);
+  --shadow-strong: 0 10px 40px rgba(0, 0, 0, 0.5);
+}

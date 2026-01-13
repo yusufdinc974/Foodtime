@@ -1,0 +1,170 @@
+@import './variables.css';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+    font-family: 'Josefin Sans', sans-serif;
+    background: var(--bg-solid);
+    color: var(--text);
+    overflow-x: hidden;
+}
+
+#root {
+    min-height: 100vh;
+    background: var(--bg);
+    background-attachment: fixed;
+}
+
+/* Animated Background Pattern */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        repeating-linear-gradient(45deg,
+            transparent,
+            transparent 10px,
+            rgba(255, 237, 0, 0.02) 10px,
+            rgba(255, 237, 0, 0.02) 20px);
+    pointer-events: none;
+    z-index: 0;
+    animation: backgroundShift 20s linear infinite;
+}
+
+@keyframes backgroundShift {
+    0% {
+        transform: translateX(0) translateY(0);
+    }
+
+    100% {
+        transform: translateX(20px) translateY(20px);
+    }
+}
+
+/* Custom Scrollbar - Fenerbahçe Style */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--fb-navy);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--fb-yellow) 0%, var(--fb-gold) 100%);
+    border-radius: 10px;
+    border: 2px solid var(--fb-navy);
+    transition: var(--transition-normal);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--fb-yellow);
+    box-shadow: var(--glow-yellow);
+}
+
+/* Selection Color */
+::selection {
+    background: var(--fb-yellow);
+    color: var(--fb-navy);
+}
+
+/* Global Button Styles */
+button {
+    cursor: pointer;
+    font-family: 'Josefin Sans', sans-serif;
+    transition: all var(--transition-normal) ease;
+}
+
+button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* Global Input Styles */
+input,
+textarea,
+select {
+    font-family: 'Josefin Sans', sans-serif;
+    transition: all var(--transition-normal) ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--fb-yellow) !important;
+    box-shadow: var(--glow-yellow);
+}
+
+/* Utility Classes */
+.pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.glow {
+    box-shadow: var(--glow-yellow);
+}
+
+.slide-in {
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive Base */
+@media (max-width: 767px) {
+    body {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,113 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.dashboard-loading,
+.dashboard-error {
+    text-align: center;
+    padding: 50px;
+    font-size: 18px;
+    color: var(--text-dim);
+}
+
+.dashboard-error {
+    color: var(--fb-yellow);
+}
+
+.retry-btn {
+    margin-top: 20px;
+    padding: 12px 30px;
+    background: var(--fb-yellow);
+    color: var(--fb-navy);
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.retry-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 237, 0, 0.4);
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    animation: slideIn 0.5s ease-out;
+}
+
+/* Chart Container */
+.chart-container {
+    background: linear-gradient(135deg, var(--panel) 0%, rgba(0, 28, 84, 0.3) 100%);
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 25px;
+    backdrop-filter: blur(15px);
+    animation: slideIn 0.6s ease-out 0.1s backwards;
+}
+
+.chart-title {
+    font-family: 'DynaPuff', cursive;
+    background: linear-gradient(135deg, var(--fb-yellow) 0%, var(--fb-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+/* Recent Meals Section */
+.recent-meals-section {
+    animation: slideIn 0.7s ease-out 0.2s backwards;
+}
+
+.section-title {
+    font-family: 'DynaPuff', cursive;
+    background: linear-gradient(135deg, var(--fb-yellow) 0%, var(--fb-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.recent-meals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.no-meals {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 30px;
+    color: var(--text-dim);
+    font-size: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 767px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .chart-container {
+        padding: 20px 15px;
+    }
+
+    .chart-title,
+    .section-title {
+        font-size: 18px;
+    }
+
+    .recent-meals-grid {
+        grid-template-columns: 1fr;
+    }
+}
